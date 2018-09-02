@@ -10,9 +10,7 @@ from get_transactions import get_transactions
 from get_relation_addresses import get_relation_addresses
 from make_money_flow_graph import make_money_flow_graph
 
-
-if __name__ == '__main__':
-	target_address = sys.argv[1]
+def research_target_address(target_address):
 	output_dir_path = './ResearchResults/' + target_address + '/'
 	os.makedirs(output_dir_path, exist_ok=True)
 
@@ -30,3 +28,9 @@ if __name__ == '__main__':
 	# Money Flow
 	make_money_flow_graph(output_dir_path, target_address, transactions)
 
+	return relation_addresses
+
+
+if __name__ == '__main__':
+	target_address = sys.argv[1]
+	research_target_address(target_address)
