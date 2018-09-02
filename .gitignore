@@ -1,2 +1,2 @@
-./ResearchResults
-./__pycache__
+ResearchResults/
+__pycache__/
