@@ -32,7 +32,7 @@ def get_transactions(target_address, max_page_num):
 			if page_num >= int(max_page_num):
 				break
 
-			time.sleep(0.3) #*1sec
+			time.sleep(1) #*1sec
 		except Exception as ee:
 			pprint(ee)
 			break
