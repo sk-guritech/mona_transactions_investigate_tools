@@ -68,7 +68,7 @@ if __name__ == '__main__':
 			target_addresses = file.read().split('\n')[:-1]
 		
 		try:
-			recursive_max_time = sys.argv[sys.argv.index('-r')+1]
+			recursive_max_time = int(sys.argv[sys.argv.index('-r')+1])
 		except:
 			recursive_max_time = 2
 
@@ -77,7 +77,7 @@ if __name__ == '__main__':
 
 	elif '-r' in sys.argv:
 		try:
-			recursive_max_time = sys.argv[sys.argv.index('-r')+1]
+			recursive_max_time = int(sys.argv[sys.argv.index('-r')+1])
 		except:
 			recursive_max_time = 2
 
