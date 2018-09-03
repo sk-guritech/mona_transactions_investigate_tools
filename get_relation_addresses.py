@@ -6,10 +6,16 @@ def get_relation_addresses(transactions):
 		vout = transaction['vout']
 
 		for v in vin:
-			relation_addresses.append(v['addr'])
+			try:
+				relation_addresses.append(v['addr'])
+			except:
+				pass
 
 		for v in vout:
-			relation_addresses.append(v['scriptPubKey']['addresses'][0])
+			try:
+				relation_addresses.append(v['scriptPubKey']['addresses'][0])
+			except:
+				pass
 
 		relation_addresses = list(set(relation_addresses))
 

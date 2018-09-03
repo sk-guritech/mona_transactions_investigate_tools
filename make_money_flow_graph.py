@@ -8,9 +8,12 @@ def make_money_flow_graph(output_path, target_address, transactions):
 	simple_transactions = {}
 
 	for transaction in transactions['txs']:
-		simple_transaction = {}
-		simple_transaction['input'] = [{'value':float(vin['value']),'addr':vin['addr']} for vin in transaction['vin']]
-		simple_transaction['output'] = [{'value':float(vout['value']),'addr':vout['scriptPubKey']['addresses'][0]} for vout in transaction['vout']]
+		try:
+			simple_transaction = {}
+			simple_transaction['input'] = [{'value':float(vin['value']),'addr':vin['addr']} for vin in transaction['vin']]
+			simple_transaction['output'] = [{'value':float(vout['value']),'addr':vout['scriptPubKey']['addresses'][0]} for vout in transaction['vout']]
+		except:
+			continue
 
 		block_time = int(transaction['blocktime']) + TIME_ZONE_OFFSET
 		simple_transactions[block_time] = simple_transaction
