@@ -42,6 +42,7 @@ def recursive_target_research(root_target_address,recursive_max_time):
 	for recursive_time in range(int(recursive_max_time)):
 		for target_address in relation_all_addresses[:]:
 			if target_address in researched_addresses:
+				relation_all_addresses.remove(target_address)
 				continue
 
 			relation_addresses = research_target_address(target_address)
@@ -53,6 +54,11 @@ def recursive_target_research(root_target_address,recursive_max_time):
 			print('Researching ' + target_address + ' Finished !')
 			time.sleep(1)
 
+		relation_all_addresses = list(set(relation_all_addresses))
+
+		from pprint import pprint
+		pprint(relation_all_addresses)
+		pprint(researched_addresses)
 
 if __name__ == '__main__':
 	if len(sys.argv) == 1:
