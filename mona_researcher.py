@@ -5,6 +5,7 @@
 import sys
 import os
 import json
+import time
 
 from get_transactions import get_transactions
 from get_relation_addresses import get_relation_addresses
@@ -38,7 +39,7 @@ def recursive_target_research(root_target_address,recursive_max_time):
 	relation_all_addresses = [root_target_address]
 	researched_addresses = []
 
-	for recursive_time in range(recursive_max_time):
+	for recursive_time in range(int(recursive_max_time)):
 		for target_address in relation_all_addresses[:]:
 			if target_address in researched_addresses:
 				continue
@@ -56,15 +57,15 @@ def recursive_target_research(root_target_address,recursive_max_time):
 if __name__ == '__main__':
 	if len(sys.argv) == 1:
 		print('python mona_researcher.py [address] [options]')
+		sys.exit()
 
 	target_address = sys.argv[1]
 	recursive_max_time = 2
 
-	if len(sys.argv) >= 3:
-		if len(sys.argv) == 4:
-			recursive_max_time = sys.argv[3]
+	if len(sys.argv) >= 4:
+		recursive_max_time = sys.argv[3]
 
-	if sys.argv[2] == '-r':
-		recursive_target_research(target_address,recursive_max_time)
-	elif len(sys.argv) == 2:
+	if len(sys.argv) == 2:
 		research_target_address(target_address)
+	elif sys.argv[2] == '-r':
+		recursive_target_research(target_address,recursive_max_time)
