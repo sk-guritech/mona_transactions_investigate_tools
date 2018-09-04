@@ -1,3 +1,7 @@
+#Useage: 
+#1: set [address]_transactions.json same directory
+#2: python3 make_money_flow.py [address]
+
 import pydot
 import json
 import sys
