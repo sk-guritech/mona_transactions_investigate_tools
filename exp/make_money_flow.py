@@ -1,6 +1,7 @@
 #Useage: 
 #1: set [address]_transactions.json same directory
-#2: python3 make_money_flow.py [address]
+#2: python3 make_money_flow.py [address] [attention_money_value]
+
 
 import pydot
 import json
@@ -8,6 +9,7 @@ import sys
 from pprint import pprint
 
 address = sys.argv[1]
+attention_money_value = sys.argv[2]
 
 txs = []
 with open(address + '_transactions.json','r') as file:
@@ -52,11 +54,11 @@ block_time_list.sort()
 dot_data = 'digraph G {rankdir=TB;layout=dot;\n'
 
 for n in range(len(block_time_list)):
-	dot_data += block_time_list[n] + ' [shape=box,fontcolor=blue,fillcolor="#CC9999"];\n'
+	dot_data += block_time_list[n] + ' [shape=box,style="solid,filled",fontcolor=blue,fillcolor="#aaaaaa"];\n'
 
 for n in range(len(block_time_list) - 1):
 	dot_data += block_time_list[n] + ' -> '
-dot_data += block_time_list[-1] + ' [color=red,weight=5,arrowsize=1.5];\n'
+dot_data += block_time_list[-1] + ' [weight=5,penwidth=4];\n'
 
 # Add Transactions
 for block_time in block_time_list:
@@ -64,10 +66,18 @@ for block_time in block_time_list:
 	vout = blocks[block_time]['vout']
 
 	for in_address in vin.keys():
-		dot_data += in_address + '_' + block_time + ' -> ' + block_time + ' [label = ' + str(vin[in_address]) + ' ];\n'
+		if vin[in_address] > float(attention_money_value):
+			dot_data += in_address + '_' + block_time + ' [style = "solid,filled",fillcolor=black,fontcolor=white];\n'
+			dot_data += in_address + '_' + block_time + ' -> ' + block_time + ' [label = ' + str(vin[in_address]) + ',penwidth=4,color=red ];\n'
+		else:
+			dot_data += in_address + '_' + block_time + ' -> ' + block_time + ' [label = ' + str(vin[in_address]) + ' ];\n'
 
 	for out_address in vout.keys():
-		dot_data += block_time + ' -> ' + out_address + '_' + block_time + ' [label = ' + str(vout[out_address]) + ' ];\n'
+		if vout[out_address] > float(attention_money_value):
+			dot_data += out_address + '_' + block_time + ' [style = "solid,filled",fillcolor=black,fontcolor=white];\n'
+			dot_data += block_time + ' -> ' + out_address + '_' + block_time + ' [label = ' + str(vout[out_address]) + ',penwidth=4,color= red];\n'
+		else:
+			dot_data += block_time + ' -> ' + out_address + '_' + block_time + ' [label = ' + str(vout[out_address]) + ' ];\n'
 
 dot_data += '}'
 
